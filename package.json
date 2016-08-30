@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/router5/router5.git"
+    "url": "https://github.com/blinxjs/router5.git"
   },
   "keywords": [
     "router",
@@ -38,7 +38,7 @@
   "homepage": "http://router5.github.io",
   "dependencies": {
     "route-node": "~1.4.1",
-    "router5.transition-path": "~3.0.0"
+    "router5.transition-path": "git+https://github.com/blinxjs/transition-path.git"
   },
   "devDependencies": {
     "babel-core": "~6.9.1",
