@@ -1,0 +1,27 @@
+{
+  "lerna": "2.0.0-rc.5",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "npmClient": "yarn",
+  "commands": {
+    "publish": {
+      "ignore": [
+        "*.md",
+        "yarn.lock",
+        "*.log"
+      ]
+    }
+  },
+  "changelog": {
+    "repo": "router5/router5",
+    "labels": {
+        "bug": "Bug fix",
+        "feature": "Feature",
+        "housekeeping": "House keeping",
+        "enhancement": "Enhancement"
+    },
+    "cacheDir": ".changelog"
+  }
+}

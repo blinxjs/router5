@@ -1,14 +1,13 @@
 import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
-import npm from 'rollup-plugin-npm';
-import { argv } from 'yargs';
-
-const format = argv.format || argv.f || 'iife';
-const compress = argv.uglify;
+import nodeResolve from 'rollup-plugin-node-resolve';
+import common from 'rollup-plugin-commonjs';
 
 const babelOptions = {
-    presets: [ 'es2015-rollup' ],
+    runtimeHelpers: true,
+    presets: [['es2015', { modules: false }]],
     plugins: [
+        'external-helpers',
         'transform-object-rest-spread',
         'transform-class-properties',
         'transform-export-extensions'
@@ -16,17 +15,42 @@ const babelOptions = {
     babelrc: false
 };
 
-const dest = {
-    amd:  `dist/amd/router5${ compress ? '.min' : '' }.js`,
-    umd:  `dist/umd/router5${ compress ? '.min' : '' }.js`,
-    iife: `dist/browser/router5${ compress ? '.min' : '' }.js`
-}[format];
-
-export default {
-    entry: 'modules/index.js',
-    format,
-    plugins: [ babel(babelOptions), npm({ jsnext: true }) ].concat(compress ? uglify() : []),
-    moduleName: 'router5',
-    moduleId: 'router5',
-    dest
+const modules = {
+    router5: 'packages/router5/modules/index.js',
+    router5BrowserPlugin: 'packages/router5/modules/plugins/browser/index.js',
+    router5ListenersPlugin:
+        'packages/router5/modules/plugins/listeners/index.js',
+    persistentParamsPlugin:
+        'packages/router5/modules/plugins/persistentParams/index.js',
+    reactRouter5: 'packages/react-router5/modules/index.js',
+    reduxRouter5: 'packages/redux-router5/modules/index.js',
+    router5Helpers: 'packages/router5-helpers/modules/index.js'
 };
+
+const modulesToBuild = Object.keys(modules).reduce((acc, moduleName) => {
+    const base = {
+        format: 'umd',
+        entry: modules[moduleName],
+        external: ['react'],
+        moduleName
+    };
+    const packageDir = modules[moduleName].match(/^packages\/([\w-]+)\//)[1];
+    const plugins = [
+        common({ include: `packages/${packageDir}/node_modules/**` }),
+        babel(babelOptions),
+        nodeResolve({ jsnext: true })
+    ];
+
+    return acc.concat([
+        Object.assign({}, base, {
+            dest: `dist/${moduleName}.js`,
+            plugins
+        }),
+        Object.assign({}, base, {
+            dest: `dist/${moduleName}.min.js`,
+            plugins: plugins.concat(uglify())
+        })
+    ]);
+}, []);
+
+export default modulesToBuild;

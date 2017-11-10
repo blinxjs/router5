@@ -1,5 +1,8 @@
-/node_modules
-/temp
-/coverage
-saucelabs.js
+node_modules
+coverage
 npm-debug.log
+yarn-error.log
+lerna-debug.log
+
+packages/*/dist
+.changelog

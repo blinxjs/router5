@@ -1,0 +1,7 @@
+**/.*
+modules
+coverage
+tests
+node_modules
+*.md
+*.config.js

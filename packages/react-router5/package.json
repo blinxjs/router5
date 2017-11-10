@@ -1,0 +1,33 @@
+{
+  "name": "react-router5",
+  "version": "5.3.1",
+  "description": "router5 helpers for React",
+  "main": "dist/commonjs/index.js",
+  "jsnext:main": "dist/es/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/router5/router5.git"
+  },
+  "keywords": [
+    "router",
+    "html5",
+    "history",
+    "tree",
+    "react",
+    "functional"
+  ],
+  "author": "Thomas Roch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/router5/router5/issues"
+  },
+  "homepage": "http://router5.github.com",
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0 || ^16.0.0",
+    "router5": "^5.0.1"
+  },
+  "dependencies": {
+    "prop-types": "~15.5.10"
+  },
+  "typings": "./index.d.ts"
+}
